@@ -1,0 +1,30 @@
+# Node.js
+node_modules
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+
+# Build artifacts
+dist
+build
+
+# Docker
+Dockerfile
+Dockerfile.*
+.dockerignore
+
+# Version control
+.git
+.gitignore
+
+# IDE / Editor specific
+.vscode
+.idea
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Optional: Local environment files
+.env
+*.local
