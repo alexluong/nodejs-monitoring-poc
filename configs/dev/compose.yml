@@ -1,7 +1,8 @@
 name: "poc-monitoring-dev"
 
 services:
-  app:
+  api:
+    image: poc-monitoring
     build:
       context: ../../app
       dockerfile: Dockerfile
@@ -11,5 +12,22 @@ services:
     volumes:
       - ../../app:/usr/src/app
       - /usr/src/app/node_modules
+      - ./config.api.json:/usr/src/app/.env.json
     environment:
       - NODE_ENV=development
+      - PORT=3000
+
+  notification:
+    image: poc-monitoring
+    depends_on:
+      api:
+        condition: service_started
+    ports:
+      - "3001:3001"
+    volumes:
+      - ../../app:/usr/src/app
+      - /usr/src/app/node_modules
+      - ./config.notification.json:/usr/src/app/.env.json
+    environment:
+      - NODE_ENV=development
+      - PORT=3001

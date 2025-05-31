@@ -1,0 +1,4 @@
+{
+  "service": "notification",
+  "port": "${PORT}"
+}
