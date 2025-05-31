@@ -1,17 +1,19 @@
-import { Module } from '@nestjs/common';
-import { TypedConfigModule, fileLoader } from 'nest-typed-config';
+import { Module, ModuleMetadata } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { RootConfig } from './config/config';
+import { ConfigModule, rootConfig } from './config';
+import { ApiModule } from './api';
+import { NotificationModule } from './notification';
+
+const moduleMap: Record<string, Required<ModuleMetadata>['imports'][number]> = {
+  api: ApiModule,
+  notification: NotificationModule,
+};
 
 @Module({
   imports: [
-    TypedConfigModule.forRoot({
-      schema: RootConfig,
-      load: fileLoader({
-        ignoreEnvironmentVariableSubstitution: false,
-      }),
-    }),
+    ConfigModule,
+    ...(moduleMap[rootConfig.service] ? [moduleMap[rootConfig.service]] : []),
   ],
   controllers: [AppController],
   providers: [AppService],
