@@ -1,4 +1,5 @@
 {
   "service": "api",
-  "port": "${PORT}"
+  "port": "${PORT}",
+  "nats": "${NATS_URL}"
 }

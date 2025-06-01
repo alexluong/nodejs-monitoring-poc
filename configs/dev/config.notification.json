@@ -1,4 +1,5 @@
 {
   "service": "notification",
-  "port": "${PORT}"
+  "port": "${PORT}",
+  "nats": "${NATS_URL}"
 }

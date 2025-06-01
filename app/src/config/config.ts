@@ -7,4 +7,8 @@ export class RootConfig {
 
   @IsPort()
   public readonly port!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  public readonly nats!: string;
 }

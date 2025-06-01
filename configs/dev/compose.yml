@@ -16,6 +16,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3000
+      - NATS_URL=nats://nats:4222
 
   notification:
     image: poc-monitoring
@@ -31,3 +32,11 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3001
+      - NATS_URL=nats://nats:4222
+
+  nats:
+    image: nats:alpine
+    ports:
+      - "4222:4222" # client port
+      - "6222:6222" # cluster port
+      - "8222:8222" # monitoring port
