@@ -17,6 +17,7 @@ services:
       - NODE_ENV=development
       - PORT=3000
       - NATS_URL=nats://nats:4222
+      - MONGODB_URL=mongodb://admin:password@mongodb:27017/monitoring_poc?authSource=admin
 
   notification:
     image: poc-monitoring
@@ -33,6 +34,7 @@ services:
       - NODE_ENV=development
       - PORT=3001
       - NATS_URL=nats://nats:4222
+      - MONGODB_URL=mongodb://admin:password@mongodb:27017/monitoring_poc?authSource=admin
 
   nats:
     image: nats:alpine
@@ -40,3 +42,18 @@ services:
       - "4222:4222" # client port
       - "6222:6222" # cluster port
       - "8222:8222" # monitoring port
+
+  mongodb:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: monitoring_poc
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:

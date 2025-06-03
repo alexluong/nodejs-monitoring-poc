@@ -1,5 +1,6 @@
 {
   "service": "notification",
   "port": "${PORT}",
-  "nats": "${NATS_URL}"
+  "nats": "${NATS_URL}",
+  "mongodb": "${MONGODB_URL}"
 }

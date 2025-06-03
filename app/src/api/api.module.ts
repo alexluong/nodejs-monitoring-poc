@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { ApiController } from './api.controller';
 import { RootConfig } from '../config';
+import { TemplateModule } from './template/template.module';
 
 @Module({
-  imports: [],
+  imports: [TemplateModule],
   controllers: [ApiController],
   providers: [
     {

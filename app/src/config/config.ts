@@ -11,4 +11,8 @@ export class RootConfig {
   @IsString()
   @IsNotEmpty()
   public readonly nats!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  public readonly mongodb!: string;
 }
