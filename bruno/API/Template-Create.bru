@@ -1,0 +1,25 @@
+meta {
+  name: Template - Create
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{apiUrl}}/templates
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "template": "Hello {{name}}, welcome to our service!"
+  }
+}
+
+script:post-response {
+  // Save the created template ID to collection variable
+  if (res.status === 201 && res.body._id) {
+    bru.setVar("templateId", res.body._id);
+    console.log("Saved templateId:", res.body._id);
+  }
+}

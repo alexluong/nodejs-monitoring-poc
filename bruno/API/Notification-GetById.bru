@@ -1,0 +1,15 @@
+meta {
+  name: Notification - Get by ID
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{apiUrl}}/notifications/:id
+  body: none
+  auth: none
+}
+
+params:path {
+  id: {{notificationId}}
+}

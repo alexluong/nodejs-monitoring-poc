@@ -1,0 +1,29 @@
+meta {
+  name: Notification - Trigger
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{apiUrl}}/notifications/trigger
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "templateId": "{{templateId}}",
+    "data": {
+      "name": "John Doe"
+    }
+  }
+}
+
+script:post-response {
+  // Save the notification ID to collection variable
+  if (res.status === 202 && res.body.id) {
+    bru.setVar("notificationId", res.body.id);
+    console.log("Saved notificationId:", res.body.id);
+  }
+}
+

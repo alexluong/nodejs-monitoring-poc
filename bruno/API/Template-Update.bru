@@ -1,0 +1,21 @@
+meta {
+  name: Template - Update
+  type: http
+  seq: 9
+}
+
+patch {
+  url: {{apiUrl}}/templates/:id
+  body: json
+  auth: none
+}
+
+params:path {
+  id: {{templateId}}
+}
+
+body:json {
+  {
+    "template": "Updated: Hello {{name}}, welcome to our updated service!"
+  }
+}

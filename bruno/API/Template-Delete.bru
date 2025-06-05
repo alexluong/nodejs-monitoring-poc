@@ -1,0 +1,15 @@
+meta {
+  name: Template - Delete
+  type: http
+  seq: 10
+}
+
+delete {
+  url: {{apiUrl}}/templates/:id
+  body: none
+  auth: none
+}
+
+params:path {
+  id: {{templateId}}
+}

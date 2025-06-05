@@ -1,0 +1,23 @@
+meta {
+  name: Template - Get by ID
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{apiUrl}}/templates/:id
+  body: none
+  auth: none
+}
+
+params:path {
+  id: {{templateId}}
+}
+
+script:post-response {
+  // Save the fetched template ID to collection variable
+  if (res.status === 200 && res.body._id) {
+    bru.setVar("templateId", res.body._id);
+    console.log("Saved templateId:", res.body._id);
+  }
+}
