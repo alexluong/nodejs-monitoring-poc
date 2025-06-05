@@ -2,6 +2,7 @@ import {
   Controller,
   Post,
   Get,
+  Delete,
   Body,
   Inject,
   HttpCode,
@@ -46,5 +47,12 @@ export class NotificationController {
   @Get(':id')
   getNotificationById(@Param('id') id: string) {
     return this.notificationService.findById(id);
+  }
+
+  @Delete()
+  @HttpCode(HttpStatus.OK)
+  async deleteAllNotifications() {
+    const deletedCount = await this.notificationService.deleteAll();
+    return { deletedCount };
   }
 }

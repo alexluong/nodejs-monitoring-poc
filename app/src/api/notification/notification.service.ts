@@ -24,4 +24,9 @@ export class NotificationService {
     }
     return notification;
   }
+
+  async deleteAll(): Promise<number> {
+    const result = await this.notificationModel.deleteMany({}).exec();
+    return result.deletedCount || 0;
+  }
 }
