@@ -3,9 +3,10 @@ import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { ApiController } from './api.controller';
 import { RootConfig } from '../config';
 import { TemplateModule } from './template/template.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
-  imports: [TemplateModule],
+  imports: [TemplateModule, NotificationModule],
   controllers: [ApiController],
   providers: [
     {
