@@ -1,5 +1,3 @@
-name: "poc-monitoring-dev"
-
 services:
   api:
     image: poc-monitoring
@@ -57,3 +55,8 @@ services:
 
 volumes:
   mongodb_data:
+
+networks:
+  default:
+    name: poc-monitoring-dev
+    driver: bridge

@@ -1,6 +1,7 @@
 import { Controller, Get, Logger } from '@nestjs/common';
 import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
+import { Span } from 'nestjs-otel';
 import { Model } from 'mongoose';
 import { EchoEventDto } from '../dtos/echo';
 import { PingRequestDto, PingResponseDto } from '../dtos/ping';
@@ -12,7 +13,7 @@ import {
 
 @Controller('notification')
 export class NotificationController {
-  private logger = new Logger('NotificationController');
+  private logger = new Logger(NotificationController.name);
 
   constructor(
     @InjectModel(Notification.name)
@@ -26,11 +27,13 @@ export class NotificationController {
     };
   }
 
+  @Span('echo')
   @EventPattern('echo')
   echo(@Payload() data: EchoEventDto) {
     this.logger.log('echo', data);
   }
 
+  @Span('ping')
   @MessagePattern('ping')
   handlePing(data: PingRequestDto): PingResponseDto {
     return new PingResponseDto({
@@ -40,6 +43,7 @@ export class NotificationController {
     });
   }
 
+  @Span('notification.trigger')
   @EventPattern('notification.trigger')
   async handleSendNotification(@Payload() message: NotificationMessageDto) {
     // Mock notification sending - just log for now

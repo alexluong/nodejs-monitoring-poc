@@ -1,3 +1,6 @@
+import * as tracer from './tracer';
+tracer.start();
+
 import { NestFactory } from '@nestjs/core';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';

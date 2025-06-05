@@ -1,30 +1,30 @@
 # Stage 1: Base - common setup
 FROM node:22-alpine AS base
 WORKDIR /usr/src/app
+# Install pnpm globally
+RUN npm install -g pnpm
 # Copy package.json and lock file
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 
 # Stage 2: Development - install all dependencies, including dev
 FROM base AS development
 ENV NODE_ENV=development
-# Install all dependencies
-RUN npm install
 # Copy the rest of the application code (will be overlaid by volume mount in dev)
 COPY . .
 EXPOSE 3000
-# Default command for development
-CMD ["npm", "run", "start:dev"]
+# Default command for development - install deps on every restart then start
+CMD ["sh", "-c", "pnpm install && pnpm run start:dev"]
 
 # Stage 3: Builder - for creating production build
 FROM base AS builder
 # Install all dependencies (needed for 'nest build')
-RUN npm install
+RUN pnpm install
 # Copy the rest of the application source code
 COPY . .
 # Build the application
-RUN npm run build
+RUN pnpm run build
 # Remove dev dependencies after build for a lean node_modules
-RUN npm prune --production
+RUN pnpm prune --prod
 
 # Stage 4: Production - final lean image
 FROM node:22-alpine AS production
