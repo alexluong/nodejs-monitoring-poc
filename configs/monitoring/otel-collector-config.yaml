@@ -17,10 +17,17 @@ processors:
         action: upsert
 
 exporters:
-  otlp:
+  # Traces exporter to Tempo
+  otlp/tempo:
     endpoint: tempo:4317
     tls:
       insecure: true
+  
+  # Metrics exporter for Prometheus scraping
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+    resource_to_telemetry_conversion:
+      enabled: true
   
   # Enable for debugging
   logging:
@@ -31,6 +38,11 @@ service:
     traces:
       receivers: [otlp]
       processors: [resource, batch]
-      exporters: [otlp, logging]
+      exporters: [otlp/tempo, logging]
+    
+    metrics:
+      receivers: [otlp]
+      processors: [resource, batch]
+      exporters: [prometheus, logging]
   
   extensions: []

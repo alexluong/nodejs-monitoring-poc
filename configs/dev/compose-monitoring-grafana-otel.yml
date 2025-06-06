@@ -22,6 +22,21 @@ services:
     ports:
       - "3200:3200" # Tempo HTTP API
 
+  # Prometheus - metrics storage and querying
+  prometheus:
+    image: prom/prometheus:v2.48.1
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=15d"
+      - "--web.enable-remote-write-receiver"
+      - "--web.enable-lifecycle"
+    volumes:
+      - ../monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090" # Prometheus web UI
+
   # Grafana
   grafana:
     image: grafana/grafana:10.2.2
@@ -36,20 +51,24 @@ services:
       - "3030:3000" # Avoid conflict with app port 3000
     depends_on:
       - tempo
+      - prometheus
 
   api:
     environment:
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
       - OTEL_SERVICE_NAME=api
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+      - OTEL_METRIC_EXPORT_INTERVAL=1000
 
   notification:
     environment:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
       - OTEL_SERVICE_NAME=notification
+      - OTEL_METRIC_EXPORT_INTERVAL=1000
 
 volumes:
   tempo-data:
   grafana-data:
+  prometheus-data:
 
 networks:
   default:

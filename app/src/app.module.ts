@@ -25,11 +25,9 @@ const moduleMap: Record<string, Required<ModuleMetadata>['imports'][number]> = {
     }),
     OpenTelemetryModule.forRoot({
       metrics: {
-        hostMetrics: true,
+        hostMetrics: false,
         apiMetrics: {
           enable: true,
-          defaultAttributes: {},
-          ignoreUndefinedRoutes: true,
         },
       },
     }),

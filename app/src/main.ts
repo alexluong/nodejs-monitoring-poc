@@ -1,5 +1,5 @@
-import * as tracer from './tracer';
-tracer.start();
+import * as otel from './otel';
+otel.start();
 
 import { NestFactory } from '@nestjs/core';
 import { Logger, ValidationPipe } from '@nestjs/common';
