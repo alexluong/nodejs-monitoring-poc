@@ -11,4 +11,4 @@ up/dev/grafana:
 	docker-compose -f configs/dev/compose.yml -f configs/dev/compose-monitoring-grafana-otel.yml up -d
 
 down/dev/grafana:
-	docker-compose -f configs/dev/compose.yml -f configs/dev/compose-monitoring-grafana-otel.yml up -d
+	docker-compose -f configs/dev/compose.yml -f configs/dev/compose-monitoring-grafana-otel.yml down
